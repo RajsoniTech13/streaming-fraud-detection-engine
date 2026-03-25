@@ -1,0 +1,13 @@
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Big Data & Spark
+fraud_data/
+checkpoint/
+*.parquet
+*.json
+.ipynb_checkpoints/
+
+# OS Files
+.DS_Store
