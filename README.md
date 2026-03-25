@@ -96,6 +96,7 @@ Open a **final terminal** on your Mac, navigate to the frontend folder, and star
 
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
