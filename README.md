@@ -4,7 +4,7 @@ A full-stack, real-time FinTech fraud detection system. This project simulates l
 
 ---
 
-## 🚀 The Flawless Startup Sequence
+##  The Flawless Startup Sequence
 
 When you are ready to present or work again, follow these exact steps in order.
 
@@ -183,7 +183,7 @@ Each transaction record flowing through the pipeline has the following schema:
 | `country`          | String         | Geo-located country                      |
 | `payment_method`   | Enum String    | `crypto`, `credit_card`, etc.            |
 | `device_type`      | Enum String    | `mobile`, `desktop`, `tablet`            |
-| **`risk_score`** ✅ | Integer        | Computed Spark heuristic metric (0–100+) |
-| **`risk_level`** 🔴 | Enum String    | `SAFE`, `MEDIUM`, `HIGH`                 |
+| **`risk_score`**  | Integer        | Computed Spark heuristic metric (0–100+) |
+| **`risk_level`**  | Enum String    | `SAFE`, `MEDIUM`, `HIGH`                 |
 
 > `risk_score` and `risk_level` are **computed fields** added by the PySpark streaming layer — they do not exist in the raw generated data.
