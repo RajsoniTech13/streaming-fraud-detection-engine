@@ -4,73 +4,108 @@ A full-stack, real-time FinTech fraud detection system. This project simulates l
 
 ---
 
-## 🚀 Getting Started: Step-by-Step Guide
+## 🚀 The Flawless Startup Sequence
 
-Follow these sequential steps to run the complete infrastructure, data pipeline, and UI from scratch.
+When you are ready to present or work again, follow these exact steps in order.
 
-### Step 1: Start the Docker Infrastructure
-Everything required for Big Data (Kafka, Hadoop/HDFS, and Jupyter for PySpark) is containerized. 
+---
 
-Open your terminal in the project root and run:
+### Step 1: Boot up the Cluster (Docker)
+
+Open a terminal in your main `fintech-fraud-detection-system` folder and start the infrastructure:
+
 ```bash
 docker-compose up -d
 ```
-*Wait a minute for the HDFS NameNode, DataNodes, and Kafka brokers to fully spin up.*
 
-### Step 2: Run the Data Generator & PySpark Pipeline (Via Jupyter)
-The application’s core generation and stream-processing logic is contained inside your Jupyter notebook within the `app` folder.
+> **⏳ Wait about 15–20 seconds** to let Hadoop and Kafka fully wake up before moving to Step 2.
 
-1. **Get the Jupyter Token:**
-   Run the following command to retrieve the secure token for the Jupyter Notebook container:
-   ```bash
-   docker logs <jupyter-container-name>
-   ```
-   *(Note: Replace `<jupyter-container-name>` with the actual name of your Jupyter container, e.g., `jupyter-spark`)*
+> [!TIP]
+> If you get errors about Kafka not being installed or similar issues, rebuild from scratch:
+> ```bash
+> docker-compose down
+> docker-compose up --build -d
+> ```
 
-2. **Login to Jupyter:**
-   Open your browser and navigate to [http://localhost:8888](http://localhost:8888). Paste the token from the logs to authenticate.
+---
 
-3. **Run the Notebook Cells:**
-   - Navigate into the `app/` folder (mounted in Jupyter).
-   - Open your primary PySpark notebook (e.g., `Untitled.ipynb`).
-   - Note: This notebook handles both the **Python Data Generator** (pushing to Kafka) and the **PySpark Structured Streaming** (reading from Kafka and writing `.parquet` files to HDFS).
-   - **Run all cells** sequentially to ensure Hadoop configurations are set up and data begins streaming into `hdfs://namenode:8020/fraud_data`.
+### Step 2: Prepare HDFS (The Safety Check)
 
-### Step 3: Start the FastAPI Backend
-The backend serves the aggregated HDFS data to the frontend viaREST endpoints. 
+Ensure Hadoop has the right folder and permissions ready for Spark to write to:
 
-Open a **new local terminal** (on your host machine) and run:
 ```bash
-cd app/api
-
-# (Optional but recommended) Create and activate a Virtual Environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install the required Python backend libraries
-pip install -r requirements.txt
-
-# Start the uvicorn ASGI server
-uvicorn main:app --reload --port 8501
+docker exec -it fintech-fraud-detection-system-namenode-1 hdfs dfs -mkdir -p /fraud_data
+docker exec -it fintech-fraud-detection-system-namenode-1 hdfs dfs -chown jovyan:supergroup /fraud_data
 ```
-*The API is now continuously fetching from Hadoop and serving JSON on port 8501.*
 
-### Step 4: Launch the React Dashboard
-Finally, start the Sentinel UI to visualize the real-time threat intelligence.
+---
 
-Open **another new terminal** and run:
+### Step 3: Turn on the Data Stream
+
+Open a **new terminal**, drop into the Jupyter container, and start the transaction generator:
+
+```bash
+docker exec -it jupyter bash
+```
+
+Then inside the container:
+
+```bash
+python generator.py
+```
+
+> *(Leave this terminal open and running in the background.)*
+
+---
+
+### Step 4: Start the Spark Brain
+
+1. Open a **new terminal** and grab your Jupyter token:
+   ```bash
+   docker logs jupyter
+   ```
+2. Open your browser and go to **[http://localhost:8888](http://localhost:8888)**.
+3. Open the `Untitled.ipynb` notebook.
+4. Click **Kernel → Restart Kernel and Run All Cells…**
+
+> [!IMPORTANT]
+> **CRUCIAL PAUSE:** Wait about **15–20 seconds**. Spark needs time to process the first batch from Kafka and create the very first Parquet file in HDFS.
+
+---
+
+### Step 5: Start the API Bridge
+
+Once Spark has dropped the first file, your API is safe to start. Open a **new terminal** and drop into the Jupyter container:
+
+```bash
+docker exec -it jupyter bash
+```
+
+Then navigate to your API and start it:
+
+```bash
+cd ~/app/api
+uvicorn main:app --host 0.0.0.0 --port 8501
+```
+
+---
+
+### Step 6: Launch the Dashboard
+
+Open a **final terminal** on your Mac, navigate to the frontend folder, and start the UI:
+
 ```bash
 cd frontend
-
-# Install Node modules
-npm install
-
-# Start the Vite development server
 npm run dev
 ```
 
-### 🎯 View the Application
-Open your browser and navigate to: **[http://localhost:5173](http://localhost:5173)**
+---
+
+### 🎯 You are Live! 🌐
+
+Go to **[http://localhost:5173](http://localhost:5173)** in your browser.
+
+Because you started the generator and Spark **before** the API, the API instantly found the Parquet schema, and your dashboard should be perfectly animating with real-time data.
 
 ---
 
@@ -90,3 +125,65 @@ fintech-fraud-detection-system/
 │   └── package.json         
 └── README.md
 ```
+
+---
+
+## 🏗️ System Architecture
+
+### Pipeline Architecture
+
+The end-to-end data pipeline follows a 5-stage streaming architecture:
+
+```
+┌─────────────────────┐
+│  1. Data Ingestion   │   Live generator produces transactions published
+│     (Kafka)          │   to Confluent Kafka topic `transactions`.
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  2. Real-time        │   PySpark Structured Streaming consumes Kafka,
+│     Inference        │   computes complex risk scores based on
+│     (PySpark)        │   heuristics.
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  3. Distributed      │   Analyzed batches sink to Hadoop as
+│     Storage          │   `.snappy.parquet` logs at
+│     (HDFS Parquet)   │   hdfs://namenode:8020/fraud_data
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  4. API Serving      │   FastAPI ASGI server on Port 8501 queries
+│     (FastAPI)        │   Parquet files on demand, aggregating JSON.
+└────────┬────────────┘
+         │
+         ▼
+┌─────────────────────┐
+│  5. Client           │   React SPA polling FastAPI every 5 seconds
+│     Visualization    │   to render dynamic Recharts arrays.
+│     (Vite React)     │
+└─────────────────────┘
+```
+
+---
+
+### Transaction Schema
+
+Each transaction record flowing through the pipeline has the following schema:
+
+| Field Name         | Data Type      | Description                              |
+|--------------------|----------------|------------------------------------------|
+| `transaction_id`   | UUID String    | Unique identifier for the transaction    |
+| `user_id`          | Integer        | Originating account ID                   |
+| `amount`           | Float          | Transaction value (USD)                  |
+| `timestamp`        | ISO 8601 String| Time of execution                        |
+| `country`          | String         | Geo-located country                      |
+| `payment_method`   | Enum String    | `crypto`, `credit_card`, etc.            |
+| `device_type`      | Enum String    | `mobile`, `desktop`, `tablet`            |
+| **`risk_score`** ✅ | Integer        | Computed Spark heuristic metric (0–100+) |
+| **`risk_level`** 🔴 | Enum String    | `SAFE`, `MEDIUM`, `HIGH`                 |
+
+> `risk_score` and `risk_level` are **computed fields** added by the PySpark streaming layer — they do not exist in the raw generated data.
