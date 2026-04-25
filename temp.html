@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServEase - Operational Plan Slide</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #e9eff9; /* Fallback for older browsers */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Slide Dimensions (Standard 16:9 Pitch Deck Ratio) */
+  .slide-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #b6d2ff 100%);
+    width: 960px;
+    height: 540px;
+    box-shadow: 0 10px 30px rgba(237, 236, 236, 0.15);
+    position: relative;
+    overflow: hidden;
+    padding: 40px 50px;
+    box-sizing: border-box;
+  }
+
+  .header {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2b4c7e;
+    margin: 0 0 5px 0;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #5a6c8a;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* 3-Column Layout */
+  .columns-wrapper {
+    display: flex;
+    gap: 20px;
+    height: 340px;
+  }
+
+  /* Modern UI Cards */
+  .column-card {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-top: 5px solid #4a90e2; /* ServEase Blue Theme */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .col-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2b4c7e;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 10px;
+  }
+
+  .icon {
+    font-size: 24px;
+  }
+
+  /* Bullet Points */
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: #4a5568;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 15px;
+  }
+
+  li::before {
+    content: "■";
+    color: #4a90e2;
+    font-size: 10px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+    font-size: 12px;
+    color: #718096;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+  <div class="slide-container">
+    <div class="header">
+      <h1 class="title">. .  Operational Plan</h1>
+      <p class="subtitle">Execution Strategy for Scalable Service Delivery</p>
+    </div>
+    
+    <div class="columns-wrapper">
+      
+      <div class="column-card">
+        <div class="col-title"><span class="icon">⚙️</span> Core Operations</div>
+        <ul>
+          <li>Real-time matching of customers with nearby verified providers</li>
+          <li>End-to-end workflow: <br>Book → Match → Service → Pay → Rate </li>
+          <li>Dynamic pricing ensures demand-supply balance </li>
+        </ul>
+      </div>
+      
+      <div class="column-card">
+        <div class="col-title"><span class="icon">💻</span> Technology & Team</div>
+        <ul>
+          <li>React-based frontend <br>(Customer + Provider apps) </li>
+          <li>Scalable backend with real-time matching system </li>
+          <li>Integrations: Payment gateway, Maps, Aadhaar e-KYC </li>
+          <li>Founders: Product (Frontend & Strategy) + Backend (System & Ops) </li>
+        </ul>
+      </div>
+      
+      <div class="column-card">
+        <div class="col-title">> Delivery & Milestones</div>
+        <ul>
+          <li>OTP-based service start + live tracking </li>
+          <li>Aadhaar-verified providers with trust score </li>
+          <li>Insurance + 30-day service warranty </li>
+          <li>Milestones: Launch in Ahmedabad, onboard 100+ providers, achieve 100–200 bookings/day </li>
+        </ul>
+      </div>
+
+    </div>
+    
+    <div class="footer">NIRMAN 2.0 | Business Plan Competition [cite: 526]</div>
+  </div>
+
+</body>
+</html>
