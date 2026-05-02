@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,30 +8,184 @@
   body {
     @apply bg-dark-950 text-slate-200 font-sans antialiased;
   }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @layer components {
-  .pro-card {
-    @apply bg-dark-900 border border-dark-700/50 rounded-xl shadow-lg;
+  /* === GLASSMORPHISM CARD === */
+  .glass-card {
+    @apply bg-dark-900/80 backdrop-blur-xl border border-dark-700/40 rounded-2xl shadow-xl;
+    background: linear-gradient(135deg, rgba(13, 16, 23, 0.9), rgba(18, 21, 29, 0.95));
   }
-  
+  .glass-card:hover {
+    border-color: rgba(168, 85, 247, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(168, 85, 247, 0.05);
+  }
+
+  /* === PRO CARD (upgraded) === */
+  .pro-card {
+    @apply bg-dark-900/90 backdrop-blur-md border border-dark-700/30 rounded-2xl shadow-lg transition-all duration-300;
+  }
+  .pro-card:hover {
+    @apply border-dark-600/50 shadow-2xl;
+    transform: translateY(-1px);
+  }
+
+  /* === METRIC CARD WITH GLOW === */
+  .metric-card {
+    @apply relative bg-dark-900/90 backdrop-blur-md border border-dark-700/30 rounded-2xl p-6 overflow-hidden transition-all duration-300;
+  }
+  .metric-card::before {
+    content: '';
+    @apply absolute top-0 left-0 right-0 h-[2px] opacity-0 transition-opacity duration-300;
+    background: linear-gradient(90deg, transparent, var(--accent-color, #a855f7), transparent);
+  }
+  .metric-card:hover::before {
+    @apply opacity-100;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Accent variants */
+  .metric-card--purple { --accent-color: #a855f7; }
+  .metric-card--cyan { --accent-color: #22d3ee; }
+  .metric-card--rose { --accent-color: #f43f5e; }
+  .metric-card--emerald { --accent-color: #22c55e; }
+  .metric-card--amber { --accent-color: #f59e0b; }
+
+  /* === TABLE ROWS === */
   .pro-table-row {
-    @apply border-b border-dark-700/50 hover:bg-dark-800 transition-colors duration-200;
+    @apply border-b border-dark-700/30 hover:bg-dark-800/60 transition-all duration-200;
+  }
+
+  /* === SEVERITY BADGES === */
+  .badge-critical {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .badge-warning {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(251, 191, 36, 0.05));
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.2);
+  }
+  .badge-safe {
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  /* === GRADIENT TEXT === */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #c084fc, #22d3ee);
+  }
+  .gradient-text-danger {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #f87171, #fb923c);
+  }
+
+  /* === SIDEBAR NAV ITEM === */
+  .nav-item {
+    @apply flex items-center px-4 py-2.5 rounded-xl text-sm transition-all duration-200;
+  }
+  .nav-item--active {
+    @apply bg-primary-500/10 text-primary-400 font-medium;
+    box-shadow: inset 3px 0 0 0 #a855f7;
+  }
+  .nav-item--inactive {
+    @apply text-slate-400 hover:bg-dark-800/60 hover:text-slate-200;
+  }
+
+  /* === PROGRESS BAR === */
+  .risk-bar {
+    @apply h-1.5 rounded-full overflow-hidden bg-dark-700/50;
+  }
+  .risk-bar__fill {
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+
+  /* === SECTION HEADER === */
+  .section-header {
+    @apply text-xs font-semibold tracking-[0.15em] uppercase;
+    color: rgba(148, 163, 184, 0.6);
+  }
+
+  /* === ANIMATED DOT === */
+  .pulse-dot {
+    @apply relative flex h-2 w-2;
+  }
+  .pulse-dot::before {
+    content: '';
+    @apply absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping;
+    background: inherit;
+  }
+  .pulse-dot::after {
+    content: '';
+    @apply relative inline-flex rounded-full h-2 w-2;
+    background: inherit;
   }
 }
 
-/* Custom Scrollbar for sleek dark look */
+@layer utilities {
+  /* Staggered entrance animations */
+  .stagger-1 { animation-delay: 0.05s; }
+  .stagger-2 { animation-delay: 0.1s; }
+  .stagger-3 { animation-delay: 0.15s; }
+  .stagger-4 { animation-delay: 0.2s; }
+  .stagger-5 { animation-delay: 0.25s; }
+  .stagger-6 { animation-delay: 0.3s; }
+
+  .fill-both {
+    animation-fill-mode: both;
+  }
+}
+
+/* === CUSTOM SCROLLBAR === */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent; 
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2a303c; 
-  border-radius: 4px;
+  background: #232838;
+  border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #a855f7; 
+  background: linear-gradient(180deg, #a855f7, #22d3ee);
+}
+
+/* === RECHARTS TOOLTIP OVERRIDE === */
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* === GRID BACKGROUND PATTERN === */
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* === GLOW EFFECTS === */
+.glow-purple {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.15), 0 0 45px rgba(168, 85, 247, 0.05);
+}
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.15), 0 0 45px rgba(34, 211, 238, 0.05);
+}
+.glow-danger {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.15), 0 0 45px rgba(239, 68, 68, 0.05);
 }
