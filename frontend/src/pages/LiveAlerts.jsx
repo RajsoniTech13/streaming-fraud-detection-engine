@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShieldAlert, Activity, AlertTriangle, Clock, Hash, User, DollarSign, MapPin, Monitor, Filter, ChevronDown, Zap } from 'lucide-react';
+import { ShieldAlert, Activity, AlertTriangle, Clock, Hash, User, DollarSign, MapPin, Monitor, ChevronDown, Zap } from 'lucide-react';
 
 const API_URL = "http://localhost:8501";
 const POLL_INTERVAL = 5000;

@@ -5,7 +5,7 @@ import {
   AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ComposedChart, Line
 } from 'recharts';
-import { Activity, ShieldAlert, Cpu, Globe, CreditCard, TrendingUp, TrendingDown, Zap, Eye } from 'lucide-react';
+import { Activity, ShieldAlert, Globe, TrendingUp, TrendingDown, Zap, Eye } from 'lucide-react';
 
 const API_URL = "http://localhost:8501";
 const POLL_INTERVAL = 5000;

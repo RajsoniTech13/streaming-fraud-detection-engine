@@ -1,4 +1,4 @@
-import { Database, Server, Cpu, Layers, ArrowDown, CheckCircle2, Radio, Box, Globe, Code2, Gauge, Wifi } from 'lucide-react';
+import { Database, Server, Cpu, Layers, ArrowDown, Radio, Globe, Code2, Gauge, Wifi } from 'lucide-react';
 
 const techStack = [
   { name: 'Apache Kafka', role: 'Stream Ingestion', color: 'from-orange-500 to-amber-500', icon: Radio },

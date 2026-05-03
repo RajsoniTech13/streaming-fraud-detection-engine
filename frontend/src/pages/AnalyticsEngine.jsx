@@ -3,10 +3,9 @@ import {
   ResponsiveContainer, Tooltip,
   ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, ZAxis,
   Treemap, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  AreaChart, Area, BarChart, Bar, Cell,
-  FunnelChart, Funnel, LabelList
+  AreaChart, Area, Cell,
 } from 'recharts';
-import { Activity, BrainCircuit, Layers, Target, TrendingUp, AlertTriangle, BarChart3, Radar as RadarIcon, GitBranch } from 'lucide-react';
+import { BrainCircuit, Layers, Target, TrendingUp, AlertTriangle, BarChart3, Radar as RadarIcon, GitBranch } from 'lucide-react';
 
 const API_URL = "http://localhost:8501";
 const POLL_INTERVAL = 8000;
@@ -42,7 +41,7 @@ function generateScatterData(alerts) {
 }
 
 // Generate funnel data
-function generateFunnelData(riskData, alertCount) {
+function generateFunnelData(riskData) {
   const total = riskData.reduce((a, b) => a + (b.count || 0), 0);
   const safe = riskData.find(d => d.risk_level === 'SAFE')?.count || 0;
   const medium = riskData.find(d => d.risk_level === 'MEDIUM')?.count || 0;
@@ -56,22 +55,6 @@ function generateFunnelData(riskData, alertCount) {
   ];
 }
 
-// Generate heatmap-style data
-function generateHeatmapData(countryData, paymentData) {
-  const countries = countryData.map(d => d.country);
-  const methods = ['credit_card', 'crypto', 'bank_transfer', 'paypal', 'debit_card'];
-  const data = [];
-  countries.forEach(c => {
-    methods.forEach(m => {
-      data.push({
-        country: c,
-        method: m,
-        value: Math.round(Math.random() * 30 + 1),
-      });
-    });
-  });
-  return data;
-}
 
 // Generate correlation data for time-of-day analysis
 function generateTimeAnalysis() {
@@ -132,7 +115,7 @@ export default function AnalyticsEngine() {
   }, []);
 
   const scatterData = generateScatterData(alerts);
-  const funnelData = generateFunnelData(riskData, alerts.length);
+  const funnelData = generateFunnelData(riskData);
   const timeData = generateTimeAnalysis();
   const treemapData = [
     ...countryData.map(d => ({ name: d.country, size: d.count, fill: '#a855f7' })),
