@@ -1,5 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Settings, ShieldAlert, Activity, Shield, BarChart3, Bell, Search, ChevronRight } from 'lucide-react';
+import {
+  LayoutDashboard, Settings, ShieldAlert, Activity, Shield, BarChart3, Bell,
+  Search, ChevronRight, Layers, Users, Key, Briefcase
+} from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const API_URL = "http://localhost:8501";
@@ -15,8 +18,17 @@ const navSections = [
     ]
   },
   {
-    label: 'System',
+    label: 'Operations',
     items: [
+      { to: '/cases', icon: Briefcase, label: 'Case Management', accent: 'warning' },
+      { to: '/rules', icon: Layers, label: 'Rules Engine', accent: 'primary' },
+    ]
+  },
+  {
+    label: 'Platform',
+    items: [
+      { to: '/integrations', icon: Key, label: 'API & Integrations', accent: 'cyan' },
+      { to: '/team', icon: Users, label: 'Team & Access', accent: 'primary' },
       { to: '/parameters', icon: Settings, label: 'Engine Parameters', accent: 'primary' },
     ]
   }
@@ -27,6 +39,10 @@ const pageTitles = {
   '/': { title: 'Core Analytics', subtitle: 'Real-time fraud intelligence overview' },
   '/analytics': { title: 'Analytics Engine', subtitle: 'Deep-dive risk analysis & correlation' },
   '/alerts': { title: 'Live Interventions', subtitle: 'Critical threat monitoring queue' },
+  '/cases': { title: 'Case Management', subtitle: 'Review and action flagged transactions' },
+  '/rules': { title: 'Rules Engine', subtitle: 'Configure dynamic detection rules' },
+  '/integrations': { title: 'API & Integrations', subtitle: 'Manage keys, webhooks, and data ingestion' },
+  '/team': { title: 'Team & Access', subtitle: 'Manage team roles and permissions' },
   '/parameters': { title: 'Engine Parameters', subtitle: 'System architecture & configuration' },
 };
 
@@ -67,13 +83,13 @@ export default function Layout({ children }) {
   return (
     <div className="flex h-screen bg-dark-950 text-slate-200 overflow-hidden font-sans">
       {/* Sidebar */}
-      <aside className="w-72 border-r border-dark-700/30 bg-dark-900/95 backdrop-blur-xl flex flex-col justify-between relative overflow-hidden">
+      <aside className="w-72 border-r border-dark-700/30 bg-dark-900/95 backdrop-blur-xl flex flex-col justify-between relative overflow-hidden flex-shrink-0">
         {/* Subtle gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary-500/[0.02] to-transparent pointer-events-none" />
         
-        <div className="relative z-10">
+        <div className="relative z-10 flex-1 overflow-y-auto">
           {/* Brand */}
-          <div className="h-[72px] flex items-center px-6 border-b border-dark-700/30">
+          <div className="h-[72px] flex items-center px-6 border-b border-dark-700/30 flex-shrink-0">
             <div className="flex items-center">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-primary-500/20 mr-3">
                 <Shield className="w-5 h-5 text-white" />
@@ -120,7 +136,7 @@ export default function Layout({ children }) {
         </div>
 
         {/* Status Indicator */}
-        <div className="relative z-10 p-4 border-t border-dark-700/30">
+        <div className="relative z-10 p-4 border-t border-dark-700/30 flex-shrink-0">
           <div className="bg-dark-850 p-3 rounded-xl border border-dark-700/30">
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center text-xs text-slate-400">

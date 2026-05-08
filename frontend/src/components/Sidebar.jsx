@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, AlertTriangle, Settings, ShieldAlert } from 'lucide-react';
+import { LayoutDashboard, AlertTriangle, Settings, ShieldAlert, Users, Layers } from 'lucide-react';
 
 const Sidebar = () => {
   return (
@@ -26,6 +26,22 @@ const Sidebar = () => {
           <span>Live Alerts</span>
         </NavLink>
         
+        <NavLink 
+          to="/cases" 
+          className={({isActive}) => `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 font-medium ${isActive ? 'bg-primary-50 text-primary-600' : 'hover:bg-gray-50 text-gray-600 hover:text-gray-900'}`}
+        >
+          <Users className="w-5 h-5" />
+          <span>Case Management</span>
+        </NavLink>
+
+        <NavLink 
+          to="/rules" 
+          className={({isActive}) => `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 font-medium ${isActive ? 'bg-primary-50 text-primary-600' : 'hover:bg-gray-50 text-gray-600 hover:text-gray-900'}`}
+        >
+          <Layers className="w-5 h-5" />
+          <span>Rules Engine</span>
+        </NavLink>
+
         <NavLink 
           to="/parameters" 
           className={({isActive}) => `flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors duration-200 font-medium ${isActive ? 'bg-primary-50 text-primary-600' : 'hover:bg-gray-50 text-gray-600 hover:text-gray-900'}`}
