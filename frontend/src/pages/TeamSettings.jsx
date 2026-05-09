@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
-  Users, Shield, Crown, Eye, Plus, Trash2, Mail, CheckCircle,
-  Lock, Settings, ChevronDown, X, UserPlus, Building2, Key
+  Users, Shield, Crown, Eye, Trash2, Mail, CheckCircle,
+  Lock, Settings, ChevronDown, UserPlus, Building2
 } from 'lucide-react';
 
 const ROLES = [
@@ -115,7 +115,6 @@ export default function TeamSettings() {
             <div className="divide-y divide-dark-700/20">
               {members.map(m => {
                 const roleConf = ROLES.find(r => r.id === m.role);
-                const RoleIcon = roleConf.icon;
                 return (
                   <div key={m.id} className="p-5 hover:bg-dark-800/30 transition-colors group flex items-center justify-between">
                     <div className="flex items-center gap-4">

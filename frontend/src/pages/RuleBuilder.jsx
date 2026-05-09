@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
-  Plus, Trash2, Edit2, ToggleLeft, ToggleRight, GitBranch, Play, X, ChevronDown,
-  AlertTriangle, Shield, Zap, Eye, EyeOff, GripVertical, Copy
+  Plus, Trash2, Edit2, ToggleLeft, ToggleRight, GitBranch, X,
+  AlertTriangle, Shield, Zap, Eye, EyeOff, GripVertical
 } from 'lucide-react';
 
 const CONDITION_FIELDS = ['amount', 'country', 'device_type', 'payment_method', 'is_international', 'is_new_device', 'transactions_last_1min', 'account_age_days', 'ip_address'];

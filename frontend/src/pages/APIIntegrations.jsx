@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import {
   Key, Plus, Copy, Trash2, Eye, EyeOff, Webhook, UploadCloud, FileText,
-  CheckCircle, AlertTriangle, ExternalLink, RefreshCw, Shield, Globe, Clock,
-  ChevronDown, X, Download, ArrowRight
+  CheckCircle, RefreshCw, Globe, Download, ArrowRight
 } from 'lucide-react';
 
 const INITIAL_API_KEYS = [

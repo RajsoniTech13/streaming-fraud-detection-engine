@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {
-  ShieldCheck, ShieldAlert, ShieldX, Clock, CheckCircle, XCircle, Search,
-  ChevronDown, Eye, ArrowUpRight, MessageSquare, MoreHorizontal, AlertTriangle,
-  Zap, DollarSign, User, MapPin, Monitor, X, ExternalLink
+  ShieldCheck, ShieldX, Clock, CheckCircle, XCircle, Search,
+  ChevronDown, Eye, ArrowUpRight, AlertTriangle,
+  DollarSign, User, MapPin, X
 } from 'lucide-react';
 
 // Mock case data with richer detail
@@ -366,7 +366,7 @@ function CaseDetailDrawer({ caseData, onClose, onAction }) {
                 {caseData.note && (
                   <div className="mt-2 pt-2 border-t border-dark-700/30">
                     <p className="text-[10px] text-slate-500 mb-1">Analyst Note</p>
-                    <p className="text-xs text-slate-300 italic">"{caseData.note}"</p>
+                    <p className="text-xs text-slate-300 italic">&quot;{caseData.note}&quot;</p>
                   </div>
                 )}
               </div>
